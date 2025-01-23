@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Poppins', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #1a1a1a;
+      color: #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Navigation Bar */
+    nav {
+      width: 90%;
+      max-width: 1200px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 10px 20px;
+      margin: 20px auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    nav h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: #fff;
+    }
+
+    nav div {
+      display: flex;
+      gap: 20px;
+    }
+
+    nav a {
+      color: #e0e0e0;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #3498db;
+    }
+
+    /* About Section */
+    .about-container {
+      width: 90%;
+      max-width: 800px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin: 20px auto;
+    }
+
+    .about-container h1 {
+      font-size: 2rem;
+      color: #3498db;
+      margin-bottom: 20px;
+    }
+
+    .about-container p {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .about-container a {
+      color: #3498db;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .about-container a:hover {
+      color: #2980b9;
+    }
+
+    /* Developer Info Section */
+    .developer-info {
+      margin-top: 30px;
+    }
+
+    .developer-info h2 {
+      font-size: 1.5rem;
+      color: #3498db;
+      margin-bottom: 10px;
+    }
+
+    .developer-info p {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .developer-info a {
+      display: inline-block;
+      margin: 5px 10px 5px 0;
+      padding: 8px 15px;
+      background: #3498db;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+
+    .developer-info a:hover {
+      background: #2980b9;
+    }
+
+    /* Future Plans Section */
+    .future-plans {
+      margin-top: 30px;
+    }
+
+    .future-plans h2 {
+      font-size: 1.5rem;
+      color: #3498db;
+      margin-bottom: 10px;
+    }
+
+    .future-plans ul {
+      list-style-type: disc;
+      padding-left: 20px;
+    }
+
+    .future-plans li {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      padding: 20px;
+      font-size: 0.9rem;
+      color: #e0e0e0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav>
+    <h1>Prompt Generator</h1>
+    <div>
+      <a href="/">Home</a>
+      <a href="/learn">Learn</a>
+      <a href="/about">About</a>
+      <a href="/feedback">Feedback</a>
+    
+    </div>
+  </nav>
+
+  <!-- About Section -->
+  <div class="about-container">
+    <h1>About Prompt Generator</h1>
+    <p>
+      Prompting is a powerful tool that helps users craft queries or inputs for AI systems effectively.
+      This app helps refine and evaluate prompts to ensure clarity, creativity, and technical precision.
+      Use this tool to enhance your AI interactions!
+    </p>
+
+    <!-- Developer Info Section -->
+    <div class="developer-info">
+      <h2>About the Developer</h2>
+      <p>
+        This project is developed by <strong>Liyakhath Shaik</strong>, a passionate developer who loves building tools that make AI more accessible and effective.
+      </p>
+      <p>
+        Check out my other projects and portfolio:
+      </p>
+      <a href="https://github.com/your-github" target="_blank">GitHub</a>
+      <a href="https://your-portfolio.com" target="_blank">Portfolio</a>
+      <p>
+        Connect with me on social media:
+      </p>
+      <a href="https://instagram.com/your-instagram" target="_blank">Instagram</a>
+      <a href="https://twitter.com/your-twitter" target="_blank">Twitter</a>
+      <a href="mailto:liyakhath0409@gmail.com">Email Me</a>
+    </div>
+
+    <!-- Future Plans Section -->
+    <div class="future-plans">
+      <h2>Future Plans for This Project</h2>
+      <ul>
+        <li>Add multi-language support for prompt generation and evaluation.</li>
+        <li>Integrate more AI models for diverse prompt refinement.</li>
+        <li>Enable users to save and manage their prompts in a personal dashboard.</li>
+        <li>Add a community feature to share and discuss prompts.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2023 Prompt Generator. All rights reserved.
+  </footer>
+</body>
+</html>

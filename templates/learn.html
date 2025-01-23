@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt Engineering Guide</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Poppins', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #1a1a1a;
+      color: #e0e0e0;
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Side Navigation Bar */
+    .side-nav {
+      width: 250px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      box-sizing: border-box;
+      height: 100vh;
+      position: fixed;
+      transition: transform 0.3s ease;
+    }
+
+    .side-nav h2 {
+      color: #fff;
+      font-size: 1.25rem;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .side-nav h2 button {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .side-nav a {
+      display: block;
+      color: #e0e0e0;
+      text-decoration: none;
+      padding: 10px 0;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+
+    .side-nav a:hover {
+      color: #3498db;
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: 250px; /* Offset for the side nav */
+      flex: 1;
+      padding: 20px;
+      max-width: 1200px;
+      transition: margin-left 0.3s ease;
+    }
+
+    /* Navigation Bar */
+    nav {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 10px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    nav h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: #fff;
+    }
+
+    nav div {
+      display: flex;
+      gap: 20px;
+    }
+
+    nav a {
+      color: #e0e0e0;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #3498db;
+    }
+
+    /* Content Section */
+    .content {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .content h1 {
+      font-size: 2.5rem;
+      margin: 0 0 20px;
+      color: #fff;
+    }
+
+    .content p {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin: 1.5rem 0;
+      color: #e0e0e0;
+    }
+
+    /* Techniques Grid */
+    .techniques-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .technique-card {
+      display: flex;
+      align-items: center;
+      padding: 1.5rem;
+      border: 2px solid #3498db; /* Dark blue border */
+      border-radius: 10px; /* Rounded corners */
+      background: #456b9a; /* Light blue background */
+      text-decoration: none;
+      color: #ffffff; /* Dark blue text */
+      transition: all 0.3s ease;
+    }
+
+    .technique-card:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Shadow on hover */
+      transform: translateY(-2px); /* Lift effect on hover */
+    }
+
+    .technique-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+    }
+
+    /* Last Updated */
+    .last-updated {
+      font-size: 0.875rem;
+      color: #666;
+      text-align: right;
+      margin: 2rem 0;
+    }
+
+    /* Navigation Links */
+    .navigation {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: #3498db;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: #2980b9;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .side-nav {
+        transform: translateX(-100%);
+      }
+
+      .side-nav.open {
+        transform: translateX(0);
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+
+      .techniques-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+
+      .content h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Side Navigation Bar -->
+  <div class="side-nav" id="sideNav">
+    <h2>
+      Prompt Engineering
+      <button id="toggleSidebar">&#9776;</button>
+    </h2>
+    <a href="#introduction">Prompt Introduction</a>
+    <a href="#techniques">Prompt Techniques</a>
+    <a href="/techniques/zeroshot">Zero-shot Prompting</a>
+    <a href="/techniques/fewshot">Few-shot Prompting</a>
+    <a href="/techniques/cot">Chain-of-Thought Prompting</a>
+    <a href="/techniques/meta-prompting">Meta Prompting</a>
+    <a href="/techniques/consistency">Self-Consistency</a>
+    <a href="/techniques/knowledge">Generate Knowledge Prompting</a>
+    <a href="/techniques/knowledge">Prompt Chaining</a>
+    <a href="/techniques/knowledge">Tree of Thoughts</a>
+    <a href="/techniques/knowledge">Retrieval Augmented Generation</a>
+    <a href="/techniques/knowledge">Automatic Prompt Engineer</a>
+    <a href="/techniques/knowledge">Automatic Reasoning and Tool-use</a>
+    <a href="/techniques/knowledge">Active-Prompt</a>
+    <a href="/techniques/knowledge">Directional Stimulus Prompting</a>
+    <a href="/techniques/knowledge">Program-Aided Language Models</a>
+    <a href="/techniques/knowledge">ReAct</a>
+    <a href="/techniques/knowledge">Reflexion</a>
+    <a href="/techniques/knowledge">Multimodal CoT</a>
+    <a href="/techniques/knowledge">Graph Prompting</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content" id="mainContent">
+    <!-- Navigation Bar -->
+    <nav>
+      <h1>Prompt Engineering Guide</h1>
+      <div>
+        <a href="/">Home</a>
+        <a href="/learn">Learn</a>
+        <a href="/about">About</a>
+        <a href="/feedback">Feedback</a>
+      </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+      <div class="content">
+        <!-- Title -->
+        <h1 id="introduction">Prompt Introduction</h1>
+
+        <!-- Description -->
+        <p>
+          Prompt Engineering helps to effectively design and improve prompts to get better results on different tasks with LLMs.
+        </p>
+        <p>
+          While the previous basic examples were fun, in this section we cover more advanced prompting engineering techniques that allow us to achieve more complex tasks and improve reliability and performance of LLMs.
+        </p>
+
+        <!-- Techniques Grid -->
+        <h1 id="techniques">Prompt Techniques</h1>
+        <div class="techniques-grid">
+          <a class="technique-card" href="/technique/zeroshot">
+            <span class="technique-title">Zero-shot Prompting</span>
+          </a>
+          <a class="technique-card" href="/technique/fewshot">
+            <span class="technique-title">Few-shot Prompting</span>
+          </a>
+          <a class="technique-card" href="/technique/cot">
+            <span class="technique-title">Chain-of-Thought Prompting</span>
+          </a>
+          <a class="technique-card" href="/technique/meta-prompting">
+            <span class="technique-title">Meta Prompting</span>
+          </a>
+          <a class="technique-card" href="/technique/consistency">
+            <span class="technique-title">Self-Consistency</span>
+          </a>
+          <a class="technique-card" href="/technique/knowledge">
+            <span class="technique-title">Generate Knowledge Prompting</span>
+          </a>
+          <a class="technique-card" href="/technique/knowledge">
+            <span class="technique-title">Prompt Chaining</span>
+          </a>
+          <a class="technique-card" href="/technique/knowledge">
+            <span class="technique-title">Tree of Thoughts</span>
+          </a>
+          <a class="technique-card" href="/technique/knowledge">
+            <span class="technique-title">Retrieval Augmented Generation</span>
+          </a>
+          <a class="technique-card" href="/technique/knowledge">
+            <span class="technique-title">Automatic Prompt Engineer</span>
+          </a>
+          <a class="technique-card" href="/technique/knowledge">
+            <span class="technique-title">Automatic Reasoning and Tool-use</span>
+          </a>
+          <a class="technique-card" href="/technique/knowledge">
+            <span class="technique-title">Active-Prompt</span>
+          </a>
+          <a class="technique-card" href="/technique/knowledge">
+            <span class="technique-title">Directional Stimulus Prompting</span>
+          </a>
+          <a class="technique-card" href="/technique/knowledge">
+            <span class="technique-title">Program-Aided Language Models</span>
+          </a>
+          <a class="technique-card" href="/technique/knowledge">
+            <span class="technique-title">ReAct</span>
+          </a>
+          <a class="technique-card" href="/technique/knowledge">
+            <span class="technique-title">Reflexion</span>
+          </a>
+          <a class="technique-card" href="/technique/knowledge">
+            <span class="technique-title">Multimodal CoT</span>
+          </a>
+          <a class="technique-card" href="/technique/knowledge">
+            <span class="technique-title">Graph Prompting</span>
+          </a>
+        </div>
+
+        <!-- Last Updated -->
+        <div class="last-updated">
+          Last updated on <time datetime="2024-09-19T05:41:18.000Z">September 19, 2024</time>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+          <a class="nav-link prev" href="/introduction/examples">
+            <span>Examples of Prompts</span>
+          </a>
+          <a class="nav-link next" href="/technique/zeroshot">
+            <span>Zero-shot Prompting</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript for Retractable Sidebar -->
+  <script>
+    const sideNav = document.getElementById('sideNav');
+    const mainContent = document.getElementById('mainContent');
+    const toggleSidebar = document.getElementById('toggleSidebar');
+
+    toggleSidebar.addEventListener('click', () => {
+      sideNav.classList.toggle('open');
+      mainContent.classList.toggle('open');
+    });
+  </script>
+</body>
+</html>

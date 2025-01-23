@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt Generator</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Poppins', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #1a1a1a;
+      color: #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Navigation Bar */
+    nav {
+      width: 90%;
+      max-width: 1200px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 10px 20px;
+      margin: 20px auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    nav h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: #fff;
+    }
+
+    nav div {
+      display: flex;
+      gap: 20px;
+    }
+
+    nav a {
+      color: #e0e0e0;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #3498db;
+    }
+
+    /* Main Container */
+    .container {
+      display: flex;
+      width: 90%;
+      max-width: 1200px;
+      margin: 20px auto;
+      gap: 20px;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    /* Left Panel - Input Section */
+    .input-panel {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .input-panel h2 {
+      margin: 0 0 20px;
+      font-size: 1.8rem;
+      color: #fff;
+    }
+
+    textarea, input, select, button {
+      width: 100%;
+      margin: 10px 0;
+      padding: 12px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #e0e0e0;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+    }
+
+    textarea:focus, input:focus, select:focus {
+      border-color: #3498db;
+      outline: none;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    button {
+      background: #3498db;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+    }
+
+    button:hover {
+      background: #2980b9;
+    }
+
+    /* Tag Section */
+    .inline-section {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .tag-section {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      background: #3498db;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.3s ease;
+    }
+
+    .tag:hover {
+      background: #2980b9;
+    }
+
+    /* Right Panel - Output Section */
+    .output-panel {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+    }
+
+    .output-panel h2 {
+      margin: 1px 0 22px;
+      font-size: 25px;
+      color: #fff;
+    }
+
+    .output {
+      padding: 15px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      white-space: pre-wrap;
+      color: #e0e0e0;
+      font-size: 16px;
+      max-height: 400px;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .output:empty {
+      display: none;
+    }
+
+    /* Copy Button */
+    .copy-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #3498db;
+      color: white;
+      border: none;
+      width: 80px;
+      margin-top: 4px;
+      margin-left: 15px;
+      padding: 6px 12px;
+      border-radius: 17px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: background 0.3s ease, border-radius 0.3s ease, width 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .copy-button:hover {
+      background: #2980b9;
+    }
+
+    /* Copy Button Animation */
+    .copy-button.copied {
+      width: 40px; /* Make it a circle */
+      border-radius: 50%; /* Make it a circle */
+      background: #2ecc71; /* Green color for success */
+    }
+
+    .copy-button.copied::after {
+      content: "✔"; /* Tick mark */
+      font-size: 16px;
+      color: white;
+    }
+
+    /* Scroll Indicator */
+    .scroll-indicator {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+      color: #3498db;
+      cursor: pointer;
+    }
+
+    /* Evaluate Section */
+    .evaluate-section {
+      width: 90%;
+      max-width: 1200px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin: 20px auto;
+    }
+
+    .evaluate-section h2 {
+      margin: 0 0 20px;
+      font-size: 1.8rem;
+      color: #fff;
+    }
+
+    .evaluation-output {
+      padding: 15px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      white-space: pre-wrap;
+      color: #e0e0e0;
+      font-size: 16px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .evaluation-output:empty {
+      display: none;
+    }
+
+    /* Loader */
+    .loader {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #3498db;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      display: none;
+      margin: 20px auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .input-panel, .output-panel {
+        flex: none;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav>
+    <h1>Prompt Generator</h1>
+    <div>
+      <a href="/">Home</a>
+      <a href="/learn">Learn</a>
+      <a href="/about">About</a>
+      <a href="/feedback">Feedback</a>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <div class="container">
+    <!-- Left Panel - Input Section -->
+    <div class="input-panel">
+      <h2>Generate Your Prompt</h2>
+      <textarea id="input-prompt" placeholder="Enter your prompt here..."></textarea>
+      <div class="inline-section">
+        <select id="word-limit">
+          <option value="short">Short (300-500 words)</option>
+          <option value="medium">Medium (800-1000 words)</option>
+          <option value="long">Long (1500-2000 words)</option>
+        </select>
+        <select id="model-selector">
+          <option value="ChatGPT">ChatGPT</option>
+          <option value="Gemini">Gemini</option>
+          <option value="custom">Custom</option>
+        </select>
+        <input id="custom-model" placeholder="Enter custom model name" style="display:none;">
+      </div>
+      <div class="inline-section">
+        <input id="tag-input" placeholder="Add a tag (e.g., technical)" onkeypress="addTag(event)">
+        <div class="tag-section" id="tags-container"></div>
+      </div>
+      <button onclick="submitPrompt()">Generate Optimized Prompt</button>
+    </div>
+
+    <!-- Right Panel - Output Section -->
+    <div class="output-panel">
+      <h2>Generated Prompt</h2>
+      <div class="output" id="output-box"></div>
+      <button class="copy-button" onclick="copyOutput()">Copy</button>
+    </div>
+  </div>
+
+  <!-- Scroll Indicator -->
+  <div class="scroll-indicator">
+    Scroll down for evaluation of prompt
+  </div>
+
+  <!-- Evaluate Section -->
+  <div class="evaluate-section">
+    <h2>Evaluate Prompt</h2>
+    <div class="evaluation-output" id="evaluation-box"></div>
+    <button id="evaluate-button" onclick="evaluatePrompt()">Evaluate</button>
+    <!-- New Button (Hidden Initially) -->
+    <button id="learn-more-button" style="display: none;" onclick="window.location.href='/learn'">
+      Want to Learn More About Prompt Engineering?
+    </button>
+  </div>
+
+  <!-- Loader -->
+  <div class="loader" id="loader"></div>
+
+  <script>
+    const tags = [];
+
+    // Show/hide custom model input
+    document.getElementById("model-selector").addEventListener("change", (e) => {
+      const customModelInput = document.getElementById("custom-model");
+      customModelInput.style.display = e.target.value === "custom" ? "block" : "none";
+    });
+
+    // Add tags
+    function addTag(event) {
+      if (event.key === "Enter" && event.target.value.trim()) {
+        const tag = event.target.value.trim();
+        if (!tags.includes(tag)) {
+          tags.push(tag);
+          renderTags();
+        }
+        event.target.value = "";
+      }
+    }
+
+    // Render tags
+    function renderTags() {
+      const tagsContainer = document.getElementById("tags-container");
+      tagsContainer.innerHTML = "";
+      tags.forEach((tag) => {
+        const tagElement = document.createElement("div");
+        tagElement.classList.add("tag");
+        tagElement.textContent = tag;
+        tagElement.onclick = () => removeTag(tag);
+        tagsContainer.appendChild(tagElement);
+      });
+    }
+
+    // Remove tags
+    function removeTag(tag) {
+      tags.splice(tags.indexOf(tag), 1);
+      renderTags();
+    }
+
+    // Submit prompt to backend
+    async function submitPrompt() {
+      const prompt = document.getElementById("input-prompt").value.trim();
+      const wordLimit = document.getElementById("word-limit").value;
+      const model = document.getElementById("model-selector").value;
+      const customModel = document.getElementById("custom-model").value.trim();
+      const selectedModel = model === "custom" ? customModel : model;
+
+      if (!prompt) {
+        alert("Please enter a prompt.");
+        return;
+      }
+
+      // Show loader
+      const loader = document.getElementById("loader");
+      loader.style.display = "block";
+
+      try {
+        const response = await fetch("/refine", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            prompt,
+            max_words: wordLimit,
+            model: selectedModel,
+            tags,
+          }),
+        });
+
+        const result = await response.json();
+        const outputBox = document.getElementById("output-box");
+        outputBox.textContent = result.refined_output || result.error;
+        outputBox.style.display = "block";
+      } catch (error) {
+        console.error("Error:", error);
+        alert("An error occurred. Please try again.");
+      } finally {
+        // Hide loader
+        loader.style.display = "none";
+      }
+    }
+
+    // Evaluate prompt
+    async function evaluatePrompt() {
+      const prompt = document.getElementById("input-prompt").value.trim();
+
+      if (!prompt) {
+        alert("Please enter a prompt to evaluate.");
+        return;
+      }
+
+      // Show loader
+      const loader = document.getElementById("loader");
+      loader.style.display = "block";
+
+      try {
+        const response = await fetch("/evaluate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prompt }),
+        });
+
+        const result = await response.json();
+        const evaluationBox = document.getElementById("evaluation-box");
+        evaluationBox.textContent = result.evaluation || result.error;
+        evaluationBox.style.display = "block";
+
+        // Hide the Evaluate button and show the Learn More button
+        document.getElementById("evaluate-button").style.display = "none";
+        document.getElementById("learn-more-button").style.display = "block";
+      } catch (error) {
+        console.error("Error:", error);
+        alert("An error occurred. Please try again.");
+      } finally {
+        // Hide loader
+        loader.style.display = "none";
+      }
+    }
+
+    // Copy output to clipboard
+    function copyOutput() {
+      const outputBox = document.getElementById("output-box");
+      if (outputBox.textContent) {
+        navigator.clipboard.writeText(outputBox.textContent)
+          .then(() => {
+            const copyButton = document.querySelector('.copy-button');
+            copyButton.classList.add('copied'); // Add the "copied" class
+            setTimeout(() => {
+              copyButton.classList.remove('copied'); // Remove the "copied" class after 1 second
+            }, 1000);
+          })
+          .catch(() => alert("Failed to copy prompt."));
+      } else {
+        alert("No output to copy.");
+      }
+    }
+  </script>
+</body>
+</html>

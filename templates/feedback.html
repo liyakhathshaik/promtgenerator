@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feedback</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Poppins', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #1a1a1a;
+      color: #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Navigation Bar */
+    nav {
+      width: 90%;
+      max-width: 1200px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 10px 20px;
+      margin: 20px auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    nav h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: #fff;
+    }
+
+    nav div {
+      display: flex;
+      gap: 20px;
+    }
+
+    nav a {
+      color: #e0e0e0;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #3498db;
+    }
+
+    /* Feedback Container */
+    .feedback-container {
+      width: 90%;
+      max-width: 600px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin: 20px auto;
+    }
+
+    .feedback-container h2 {
+      font-size: 1.8rem;
+      color: #3498db;
+      margin-bottom: 20px;
+    }
+
+    textarea, input, select, button {
+      width: 100%;
+      margin: 10px 0;
+      padding: 12px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #e0e0e0;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+    }
+
+    textarea:focus, input:focus, select:focus {
+      border-color: #3498db;
+      outline: none;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    button {
+      background: #3498db;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+    }
+
+    button:hover {
+      background: #2980b9;
+    }
+
+    #feedback-message {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #3498db;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav>
+    <h1>Prompt Generator</h1>
+    <div>
+      <a href="/">Home</a>
+      <a href="/learn">Learn</a>
+      <a href="/about">About</a>
+      <a href="/feedback">Feedback</a>
+      
+    </div>
+  </nav>
+
+  <!-- Feedback Container -->
+  <div class="feedback-container">
+    <h2>Feedback</h2>
+    <textarea id="feedback-description" placeholder="Enter your feedback here..."></textarea>
+    <input type="email" id="feedback-email" placeholder="Your email (optional)">
+    <select id="feedback-language">
+      <option value="en">English</option>
+      <option value="es">Spanish</option>
+      <option value="fr">French</option>
+      <option value="hi">Hindi</option>
+    </select>
+    <button onclick="submitFeedback()">Submit Feedback</button>
+    <div id="feedback-message"></div>
+  </div>
+
+  <script>
+    async function submitFeedback() {
+      const description = document.getElementById("feedback-description").value.trim();
+      const email = document.getElementById("feedback-email").value.trim();
+      const language = document.getElementById("feedback-language").value;
+
+      if (!description) {
+        document.getElementById("feedback-message").textContent = "Please enter your feedback.";
+        return;
+      }
+
+      // Your Google Apps Script Web App URL
+      const scriptUrl = "https://script.google.com/macros/s/AKfycbyNptReTdjxtgfVb_Bho_l4-tBpzxvMM0W6_5IhzRRBd9QMsB9sn5yyoPp19RLGcrfV/exec";
+
+      try {
+        const response = await fetch(scriptUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ feedback: description, email, language }),
+        });
+
+        const result = await response.json();
+        console.log("Response:", result); // Log the response
+        document.getElementById("feedback-message").textContent = result.message;
+        document.getElementById("feedback-description").value = "";
+        document.getElementById("feedback-email").value = "";
+      } catch (error) {
+        console.error("Error:", error); // Log the error
+        document.getElementById("feedback-message").textContent = "Failed to submit feedback. Please try again.";
+      }
+    }
+  </script>
+</body>
+</html>

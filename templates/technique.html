@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt Engineering Techniques</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Poppins', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #1a1a1a;
+      color: #e0e0e0;
+      line-height: 1.6;
+    }
+
+    /* Side Navigation Bar */
+    .side-nav {
+      width: 250px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      box-sizing: border-box;
+      height: 100vh;
+      position: fixed;
+      overflow-y: auto;
+    }
+
+    .side-nav h2 {
+      color: #fff;
+      font-size: 1.25rem;
+      margin-bottom: 20px;
+    }
+
+    .side-nav a {
+      display: block;
+      color: #e0e0e0;
+      text-decoration: none;
+      padding: 10px 0;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+
+    .side-nav a:hover {
+      color: #3498db;
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: 250px; /* Offset for the side nav */
+      padding: 20px;
+      max-width: 1200px;
+    }
+
+    /* Section Styles */
+    .section {
+      margin-bottom: 40px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .section h2 {
+      color: #3498db;
+      font-size: 1.75rem;
+      margin-bottom: 10px;
+    }
+
+    .section h3 {
+      color: #fff;
+      font-size: 1.25rem;
+      margin-bottom: 10px;
+    }
+
+    .section p {
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+
+    .section ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .section ul li {
+      margin-bottom: 5px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .side-nav {
+        width: 100%;
+        height: auto;
+        position: relative;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Side Navigation Bar -->
+  <div class="side-nav">
+    <h2>Prompt Engineering</h2>
+    <a href="#introduction">Introduction</a>
+    <a href="#zero-shot">Zero-shot Prompting</a>
+    <a href="#few-shot">Few-shot Prompting</a>
+    <a href="#cot">Chain-of-Thought Prompting</a>
+    <a href="#meta-prompting">Meta Prompting</a>
+    <a href="#self-consistency">Self-Consistency</a>
+    <a href="#generate-knowledge">Generate Knowledge Prompting</a>
+    <a href="#prompt-chaining">Prompt Chaining</a>
+    <a href="#tree-of-thoughts">Tree of Thoughts</a>
+    <a href="#rag">Retrieval Augmented Generation</a>
+    <a href="#auto-prompt">Automatic Prompt Engineer</a>
+    <a href="#auto-reasoning">Automatic Reasoning and Tool-use</a>
+    <a href="#active-prompt">Active-Prompt</a>
+    <a href="#directional-stimulus">Directional Stimulus Prompting</a>
+    <a href="#palm">Program-Aided Language Models</a>
+    <a href="#react">ReAct</a>
+    <a href="#reflexion">Reflexion</a>
+    <a href="#multimodal-cot">Multimodal CoT</a>
+    <a href="#graph-prompting">Graph Prompting</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Introduction -->
+   
+
+    <!-- Zero-shot Prompting -->
+    <section id="zero-shot" class="section">
+      <h2>1. Zero-shot Prompting</h2>
+      <h3>Use Case:</h3>
+      <p>Tasks where no examples are provided, and the model must rely on its pre-trained knowledge.</p>
+      <h3>Example:</h3>
+      <p><strong>Prompt:</strong> "Translate the following English text to French: 'Hello, how are you?'"</p>
+      <p><strong>Output:</strong> "Bonjour, comment ça va?"</p>
+      <h3>Developed By:</h3>
+      <p>OpenAI (GPT models)</p>
+    </section>
+
+    <!-- Few-shot Prompting -->
+    <section id="few-shot" class="section">
+      <h2>2. Few-shot Prompting</h2>
+      <h3>Use Case:</h3>
+      <p>Tasks where a few examples are provided to guide the model.</p>
+      <h3>Example:</h3>
+      <p><strong>Prompt:</strong> "Translate English to French: 'Hello' -> 'Bonjour', 'Goodbye' -> 'Au revoir', 'Thank you' -> ?"</p>
+      <p><strong>Output:</strong> "Merci"</p>
+      <h3>Developed By:</h3>
+      <p>OpenAI (GPT models)</p>
+    </section>
+
+    <!-- Chain-of-Thought Prompting -->
+    <section id="cot" class="section">
+      <h2>3. Chain-of-Thought Prompting</h2>
+      <h3>Use Case:</h3>
+      <p>Complex reasoning tasks requiring step-by-step thinking.</p>
+      <h3>Example:</h3>
+      <p><strong>Prompt:</strong> "If John has 5 apples and gives 2 to Mary, how many apples does he have left? Let's think step by step."</p>
+      <p><strong>Output:</strong> "John starts with 5 apples. He gives 2 to Mary. 5 - 2 = 3. John has 3 apples left."</p>
+      <h3>Developed By:</h3>
+      <p>Google Research</p>
+    </section>
+
+    <!-- Meta Prompting -->
+    <section id="meta-prompting" class="section">
+      <h2>4. Meta Prompting</h2>
+      <h3>Use Case:</h3>
+      <p>Guiding the model to generate or refine other prompts.</p>
+      <h3>Example:</h3>
+      <p><strong>Prompt:</strong> "Generate a prompt to summarize a long article."</p>
+      <p><strong>Output:</strong> "Summarize the following article in 3 sentences: [Article Text]"</p>
+      <h3>Developed By:</h3>
+      <p>OpenAI</p>
+    </section>
+
+    <!-- Self-Consistency -->
+    <section id="self-consistency" class="section">
+      <h2>5. Self-Consistency</h2>
+      <h3>Use Case:</h3>
+      <p>Improving reliability by generating multiple responses and selecting the most consistent one.</p>
+      <h3>Example:</h3>
+      <p><strong>Prompt:</strong> "What is the capital of France?"</p>
+      <p><strong>Output:</strong> "Paris" (selected from multiple consistent responses)</p>
+      <h3>Developed By:</h3>
+      <p>Google Research</p>
+    </section>
+
+    <!-- Generate Knowledge Prompting -->
+    <section id="generate-knowledge" class="section">
+      <h2>6. Generate Knowledge Prompting</h2>
+      <h3>Use Case:</h3>
+      <p>Tasks requiring factual accuracy by generating relevant knowledge first.</p>
+      <h3>Example:</h3>
+      <p><strong>Prompt:</strong> "What is the boiling point of water? First, generate relevant knowledge."</p>
+      <p><strong>Output:</strong> "The boiling point of water is 100°C at standard atmospheric pressure."</p>
+      <h3>Developed By:</h3>
+      <p>OpenAI</p>
+    </section>
+
+    <!-- Prompt Chaining -->
+    <section id="prompt-chaining" class="section">
+      <h2>7. Prompt Chaining</h2>
+      <h3>Use Case:</h3>
+      <p>Breaking down complex tasks into smaller, sequential prompts.</p>
+      <h3>Example:</h3>
+      <p><strong>Prompt 1:</strong> "Summarize the following article: [Article Text]"</p>
+      <p><strong>Prompt 2:</strong> "Based on the summary, generate a list of key points."</p>
+      <h3>Developed By:</h3>
+      <p>Research Community</p>
+    </section>
+
+    <!-- Tree of Thoughts -->
+    <section id="tree-of-thoughts" class="section">
+      <h2>8. Tree of Thoughts</h2>
+      <h3>Use Case:</h3>
+      <p>Exploring multiple reasoning paths to solve complex problems.</p>
+      <h3>Example:</h3>
+      <p><strong>Prompt:</strong> "Solve the following math problem by exploring multiple approaches: 2x + 3 = 7."</p>
+      <p><strong>Output:</strong> "Approach 1: Subtract 3 from both sides. Approach 2: Divide both sides by 2."</p>
+      <h3>Developed By:</h3>
+      <p>Research Community</p>
+    </section>
+
+    <!-- Retrieval Augmented Generation -->
+    <section id="rag" class="section">
+      <h2>9. Retrieval Augmented Generation</h2>
+      <h3>Use Case:</h3>
+      <p>Tasks requiring external knowledge retrieval combined with generation.</p>
+      <h3>Example:</h3>
+      <p><strong>Prompt:</strong> "What is the population of France? Retrieve relevant data and generate an answer."</p>
+      <p><strong>Output:</strong> "The population of France is approximately 67 million."</p>
+      <h3>Developed By:</h3>
+      <p>Facebook AI</p>
+    </section>
+
+    <!-- Automatic Prompt Engineer -->
+    <section id="auto-prompt" class="section">
+      <h2>10. Automatic Prompt Engineer</h2>
+      <h3>Use Case:</h3>
+      <p>Automating the creation of effective prompts for specific tasks.</p>
+      <h3>Example:</h3>
+      <p><strong>Prompt:</strong> "Generate a prompt to classify sentiment in a text."</p>
+      <p><strong>Output:</strong> "Classify the sentiment of the following text as positive, negative, or neutral: [Text]"</p>
+      <h3>Developed By:</h3>
+      <p>OpenAI</p>
+    </section>
+
+    <!-- Automatic Reasoning and Tool-use -->
+    <section id="auto-reasoning" class="section">
+      <h2>11. Automatic Reasoning and Tool-use</h2>
+      <h3>Use Case:</h3>
+      <p>Tasks requiring reasoning and integration with external tools.</p>
+      <h3>Example:</h3>
+      <p><strong>Prompt:</strong> "Calculate the square root of 144 using a calculator tool."</p>
+      <p><strong>Output:</strong> "The square root of 144 is 12."</p>
+      <h3>Developed By:</h3>
+      <p>OpenAI</p>
+    </section>
+
+    <!-- Active-Prompt -->
+    <section id="active-prompt" class="section">
+      <h2>12. Active-Prompt</h2>
+      <h3>Use Case:</h3>
+      <p>Dynamically refining prompts based on model feedback.</p>
+      <h3>Example:</h3>
+      <p><strong>Prompt:</strong> "Generate a summary of the following text: [Text]"</p>
+      <p><strong>Output:</strong> "The text discusses the benefits of exercise for mental health."</p>
+      <h3>Developed By:</h3>
+      <p>Research Community</p>
+    </section>
+
+    <!-- Directional Stimulus Prompting -->
+    <section id="directional-stimulus" class="section">
+      <h2>13. Directional Stimulus Prompting</h2>
+      <h3>Use Case:</h3>
+      <p>Guiding the model's output using specific cues or hints.</p>
+      <h3>Example:</h3>
+      <p><strong>Prompt:</strong> "Write a story about a dragon. Hint: The dragon is friendly and loves to bake."</p>
+      <p><strong>Output:</strong> "Once upon a time, there was a friendly dragon named Spark who loved baking cookies."</p>
+      <h3>Developed By:</h3>
+      <p>Research Community</p>
+    </section>
+
+    <!-- Program-Aided Language Models -->
+    <section id="palm" class="section">
+      <h2>14. Program-Aided Language Models</h2>
+      <h3>Use Case:</h3>
+      <p>Tasks requiring integration of programming logic with language models.</p>
+      <h3>Example:</h3>
+      <p><strong>Prompt:</strong> "Write a Python function to calculate the factorial of a number."</p>
+      <p><strong>Output:</strong> "def factorial(n): return 1 if n == 0 else n * factorial(n-1)"</p>
+      <h3>Developed By:</h3>
+      <p>OpenAI</p>
+    </section>
+
+    <!-- ReAct -->
+    <section id="react" class="section">
+      <h2>15. ReAct</h2>
+      <h3>Use Case:</h3>
+      <p>Combining reasoning and action for task completion.</p>
+      <h3>Example:</h3>
+      <p><strong>Prompt:</strong> "Plan a trip to Paris. First, find flights, then book a hotel."</p>
+      <p><strong>Output:</strong> "Step 1: Search for flights. Step 2: Book a hotel near the Eiffel Tower."</p>
+      <h3>Developed By:</h3>
+      <p>Google Research</p>
+    </section>
+
+    <!-- Reflexion -->
+    <section id="reflexion" class="section">
+      <h2>16. Reflexion</h2>
+      <h3>Use Case:</h3>
+      <p>Improving model outputs through iterative reflection and refinement.</p>
+      <h3>Example:</h3>
+      <p><strong>Prompt:</strong> "Write a poem about nature. Reflect and improve the first draft."</p>
+      <p><strong>Output:</strong> "The first draft: 'The trees are green.' Improved: 'The lush green trees sway in the gentle breeze.'"</p>
+      <h3>Developed By:</h3>
+      <p>Research Community</p>
+    </section>
+
+    <!-- Multimodal CoT -->
+    <section id="multimodal-cot" class="section">
+      <h2>17. Multimodal CoT</h2>
+      <h3>Use Case:</h3>
+      <p>Combining text and visual inputs for reasoning tasks.</p>
+      <h3>Example:</h3>
+      <p><strong>Prompt:</strong> "Given an image of a cat, describe its features step by step."</p>
+      <p><strong>Output:</strong> "Step 1: The cat has black fur. Step 2: It has green eyes. Step 3: It is sitting on a mat."</p>
+      <h3>Developed By:</h3>
+      <p>Research Community</p>
+    </section>
+
+    <!-- Graph Prompting -->
+    <section id="graph-prompting" class="section">
+      <h2>18. Graph Prompting</h2>
+      <h3>Use Case:</h3>
+      <p>Tasks involving structured data or relationships represented as graphs.</p>
+      <h3>Example:</h3>
+      <p><strong>Prompt:</strong> "Given a graph of friends, who is the most connected person?"</p>
+      <p><strong>Output:</strong> "Alice is the most connected person with 5 friends."</p>
+      <h3>Developed By:</h3>
+      <p>Research Community</p>
+    </section>
+  </div>
+</body>
+</html>
