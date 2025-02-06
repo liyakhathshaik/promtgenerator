@@ -16,7 +16,7 @@ logging.basicConfig(level=logging.INFO)
 
 # Configure the Gemini client
 try:
-    genai.configure(api_key="AIzaSyDI_nBkIwy7OsZfuyKh6tUJZYHYwRa25tQ")
+    genai.configure(api_key="your api key here")
 except Exception as e:
     logging.error(f"Failed to configure Gemini API: {e}")
     st.error("Failed to configure Gemini API. Please check your API key.")
