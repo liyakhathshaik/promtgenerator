@@ -8,7 +8,7 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
 
 # Configure Google Gemini API Key
-API_KEY = your api key here
+API_KEY =""
 try:
     genai.configure(api_key=API_KEY)
 except Exception as e:
